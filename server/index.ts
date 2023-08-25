@@ -1,9 +1,22 @@
-import express from 'express'
-import {json} from 'body-parser'
+import express from "express";
+import mongoose from "mongoose";
+import { json } from "body-parser";
+import { contactRouter } from "./routes/contact/contact";
+import cors from "cors";
 
-const app = express()
-app.use(json())
+const port = 3000;
 
-app.listen(3000, () => {
-    console.log('server is listening on port 3000')
-})
+const app = express();
+app.use(json());
+app.use(cors());
+app.use(contactRouter);
+
+// mongodb connection
+mongoose
+  .connect("mongodb://0.0.0.0:27017/contact")
+  .then((result) =>
+    app.listen(port, () =>
+      console.log(`connected to database and app running on port ${port}`)
+    )
+  )
+  .catch((err) => console.log(err));
