@@ -1,0 +1,12 @@
+.filter-one {
+    margin-right: 1rem;
+}
+
+.filter-button {
+    background-color: aliceblue;
+}
+
+.filter-two span:first-child {
+    margin-right: 10px;
+    font-weight: 500;
+}
