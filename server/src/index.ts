@@ -9,11 +9,13 @@ const port = 3000;
 const app = express();
 app.use(json());
 app.use(cors());
-app.use(contactRouter);
+
+// Routes
+app.use("/api/", contactRouter);
 
 // mongodb connection
 mongoose
-  .connect("mongodb://0.0.0.0:27017/contact")
+  .connect("mongodb://0.0.0.0:27017/contact-list-app")
   .then((result) =>
     app.listen(port, () =>
       console.log(`connected to database and app running on port ${port}`)
