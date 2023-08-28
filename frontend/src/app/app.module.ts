@@ -5,13 +5,15 @@ import { AppComponent } from './app.component';
 import { ContactComponent } from './contact/contact.component';
 import { HeaderComponent } from './contact/header/header.component';
 import { FilterComponent } from './contact/filter/filter.component';
+import { UserListComponent } from './contact/user-list/user-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ContactComponent,
     HeaderComponent,
-    FilterComponent
+    FilterComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule

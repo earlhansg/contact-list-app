@@ -1,0 +1,16 @@
+
+td button:first-child {
+    margin-right: 5px;
+}
+
+.th-favorites {
+    width: 20px;
+}
+
+.th-actions {
+    width: 150px;
+}
+
+.favorite-icon {
+    color: gold;
+}
