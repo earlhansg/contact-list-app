@@ -1,0 +1,31 @@
+.header h5 {
+    margin-right: auto;
+    padding: 15px 15px 0 15px;
+}
+
+.content-form {
+    margin: 20px;
+}
+
+.content-form label {
+    margin-right: auto;
+}
+
+.content-form input{
+    width: 80%;
+}
+
+.content-form ng-select {
+    width: 80%;
+}
+
+.footer {
+    justify-content: end;
+    background-color: whitesmoke;
+    padding: 12px
+}
+
+.footerBtn-success {
+    margin-right: 18px;
+    margin-left: 10px;
+}

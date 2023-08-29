@@ -1,0 +1,59 @@
+<div class="header d-flex p-3">
+  <h5 class="" id="modal-basic-title">Add Contact</h5>
+  <button type="button" class="btn" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">×</span>
+  </button>
+</div>
+<div class="content p-3">
+  <form [formGroup]="contactForm">
+    <div class="form-group d-flex content-form">
+      <label for="exampleInputPassword1">Name</label>
+      <input class="form-control" formControlName="name" />
+    </div>
+    <div class="form-group d-flex content-form">
+      <label for="exampleInputPassword1">Email</label>
+      <input class="form-control" formControlName="email" />
+    </div>
+    <div class="text-end">
+      <small
+        class="text-danger"
+        *ngIf="emailControl?.invalid && emailControl?.touched"
+      >
+        Invalid Email
+      </small>
+    </div>
+    <div class="form-group d-flex content-form">
+      <label for="exampleInputPassword1">Tel No.</label>
+      <input class="form-control" formControlName="telphoneNumber" />
+    </div>
+    <div class="text-end">
+      <small
+        class="text-danger"
+        *ngIf="teleponeNumberControl?.invalid && teleponeNumberControl?.touched"
+      >
+        Invalid Telephone Number
+      </small>
+    </div>
+    <div class="form-group d-flex content-form">
+      <label for="exampleInputPassword1">Favorite Flag</label>
+      <ng-select
+        [items]="flags"
+        bindLabel="name"
+        bindValue="id"
+        formControlName="favoriteFlag"
+      >
+      </ng-select>
+    </div>
+  </form>
+</div>
+<div class="footer d-flex">
+  <button type="button" class="btn" (click)="closeModal()">Cancel</button>
+  <button
+    type="button"
+    class="btn btn-success footerBtn-success"
+    (click)="onSubmit()"
+    [disabled]="!customValidation()"
+  >
+    Save
+  </button>
+</div>
