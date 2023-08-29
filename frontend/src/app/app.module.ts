@@ -7,6 +7,8 @@ import { HeaderComponent } from './contact/header/header.component';
 import { FilterComponent } from './contact/filter/filter.component';
 import { UserListComponent } from './contact/user-list/user-list.component';
 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,7 +18,8 @@ import { UserListComponent } from './contact/user-list/user-list.component';
     UserListComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

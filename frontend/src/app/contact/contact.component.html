@@ -1,5 +1,53 @@
 <div class="contact container">
-    <header></header>
-    <filter></filter>
-    <user-list></user-list>
+  <header (addContact)="showModal($event, mymodal)"></header>
+  <filter></filter>
+  <user-list></user-list>
 </div>
+
+<!-- <button class="btn btn-lg btn-outline-primary" (click)="open(mymodal)">Open My Modal</button> -->
+
+<ng-template #mymodal let-modal>
+  <div class="header d-flex p-3">
+    <h5 class="" id="modal-basic-title">Add Contact</h5>
+    <button
+      type="button"
+      class="btn"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="content p-3">
+    <form>
+      <div class="form-group d-flex content-form">
+        <label for="exampleInputPassword1">Name</label>
+        <input class="form-control"/>
+      </div>
+      <div class="form-group d-flex content-form">
+        <label for="exampleInputPassword1">Email</label>
+        <input class="form-control"/>
+      </div>
+      <div class="form-group d-flex content-form">
+        <label for="exampleInputPassword1">Tel No.</label>
+        <input class="form-control"/>
+      </div>
+    </form>
+  </div>
+  <div class="footer d-flex">
+    <button
+      type="button"
+      class="btn"
+      (click)="modal.close('Save click')"
+    >
+      Cancel
+    </button>
+    <button
+      type="button"
+      class="btn btn-success footerBtn-success"
+      (click)="modal.close('Save click')"
+    >
+      Save
+  </button>
+  </div>
+</ng-template>
