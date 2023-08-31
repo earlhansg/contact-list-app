@@ -1,43 +1,25 @@
-<div class="p-4">
-  <table class="table">
-    <thead>
-      <tr>
-        <th class="th-favorites"></th>
-        <th scope="col">Name</th>
-        <th scope="col">Email</th>
-        <th scope="col">Telephone No.</th>
-        <th scope="col">Favorite Flag</th>
-        <th class="th-actions"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <i class="bi bi-star-fill favorite-icon"></i>
-        </td>
-        <td>Earl Hans</td>
-        <td>earlhansg</td>
-        <td>455338821</td>
-        <td>US</td>
-        <td>
-          <button type="submit" class="btn btn-primary">
-            <span class="bi-pencil"></span>
-          </button>
-          <button type="submit" class="btn btn-danger">
-            <span class="bi-trash"></span>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-    <tbody>
+<ng-container *ngIf="users">
+  <div class="p-4">
+    <table class="table">
+      <thead>
         <tr>
+          <th class="th-favorites"></th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Telephone No.</th>
+          <th scope="col">Favorite Flag</th>
+          <th class="th-actions"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
           <td>
             <i class="bi bi-star-fill favorite-icon"></i>
           </td>
-          <td>Juan Dela Cruz</td>
-          <td>juandelacruz</td>
-          <td>22233111</td>
-          <td>PH</td>
+          <td>{{user.name}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.telephoneNumber}}</td>
+          <td>{{user.favoriteFlag}}</td>
           <td>
             <button type="submit" class="btn btn-primary">
               <span class="bi-pencil"></span>
@@ -48,5 +30,6 @@
           </td>
         </tr>
       </tbody>
-  </table>
-</div>
+    </table>
+  </div>
+</ng-container>
