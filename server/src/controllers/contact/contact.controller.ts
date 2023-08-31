@@ -5,14 +5,16 @@ export async function getContacts(
   req: Request,
   res: Response
 ): Promise<Response> {
-  const contact = new Contact({
-    name: "Kristy mae",
-    email: "earlhansg@gmail.com",
-    telephoneNumber: 9887221,
-    favoriteFlag: "PH",
-  });
+  const contacts = await Contact.find().lean();
+  return res.json(contacts);
+}
 
+
+export async function createContact(req: Request, res: Response): Promise<Response> {
+  const contact = new Contact(req.body);
   await contact.save();
 
-  return res.send("the contact");
-}
+  return res.json({
+      message: "Contact successfuly saved"  
+  })
+};
