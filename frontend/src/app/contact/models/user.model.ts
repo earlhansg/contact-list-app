@@ -7,3 +7,10 @@ export interface User {
   updatedAt: string;
   createdAt: string;
 }
+
+export type UserForm = Omit<User, '_id' | 'updatedAt' | 'createdAt'>;
+
+export type AddContactResponse = {
+  message: string;
+  contact: User | null;
+}

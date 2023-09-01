@@ -7,6 +7,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ContactService } from '../services/contact.service';
+import { User, UserForm } from '../models/user.model';
+import { of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'user-modal',
@@ -18,6 +21,8 @@ export class UserModalComponent implements OnInit {
 
   contactForm: FormGroup;
 
+  contacts: User[];
+
   flags = [
     { id: 1, name: 'USA' },
     { id: 2, name: 'PH' },
@@ -25,17 +30,27 @@ export class UserModalComponent implements OnInit {
     { id: 4, name: 'JAPAN' },
   ];
 
-  constructor(private modalService: NgbModal, private fb: FormBuilder) {
+  constructor(
+    private modalService: NgbModal,
+    private fb: FormBuilder,
+    private contactService: ContactService
+  ) {
     this.contactForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.email]],
-      telphoneNumber: ['', [this.validateTelphoneNumber]],
+      telephoneNumber: [
+        '',
+        [Validators.minLength(6), this.telephoneNumberValidator],
+      ],
       favoriteFlag: '',
     });
   }
 
   ngOnInit(): void {
-     console.log('changes', this.closeResult);
+    console.log('changes', this.closeResult);
+    this.contactService.contacts$.subscribe((data) => {
+      this.contacts = data;
+    });
   }
 
   closeModal() {
@@ -50,11 +65,11 @@ export class UserModalComponent implements OnInit {
     return this.contactForm.get('email');
   }
 
-  get teleponeNumberControl() {
-    return this.contactForm.get('telphoneNumber');
+  get telephoneNumberControl() {
+    return this.contactForm.get('telephoneNumber');
   }
 
-  validateTelphoneNumber(control: AbstractControl) {
+  telephoneNumberValidator(control: AbstractControl) {
     const regexPattern = /^[0-9+]+$/;
     if (regexPattern.test(control.value)) {
       console.log('Valid input: ' + control.value);
@@ -70,25 +85,36 @@ export class UserModalComponent implements OnInit {
   error: string = '';
 
   customValidation() {
-    if (!this.emailControl && !this.teleponeNumberControl) {
+    if (!this.emailControl && !this.telephoneNumberControl) {
       return false;
-    } else {
-      if (
-        this.nameControl?.valid && (this.emailControl?.valid || this.teleponeNumberControl?.valid)
-      ) {
-        return true;
-      }
+    }
+    if (
+      this.nameControl?.valid &&
+      ((this.emailControl?.value !== '' && this.emailControl?.valid) ||
+        this.telephoneNumberControl?.valid)
+    ) {
+      return true;
     }
     return false;
   }
 
   onSubmit() {
-    console.log('values ... ', this.contactForm.value);
-    console.log('email ... ', this.emailControl?.valid);
-    // if (this.contactForm.valid) {
-    //   console.log('Form submitted:', this.contactForm.value);
-    // } else {
-    //   console.log('Form is invalid. Please correct the errors.');
-    // }
+    // Submit the form and handle the response using RxJS operators
+    this.contactService
+      .addContact(this.contactForm.value)
+      .pipe(
+        switchMap((res) => {
+          if (res.contact) {
+            // If the response contains a contact, update the contacts list
+            this.contacts.push(res.contact);
+            this.contactService.updatedContacts(this.contacts);
+            this.contactForm.reset();
+            this.closeModal();
+          }
+          // Return an empty observable to avoid emitting a value
+          return of(undefined);
+        })
+      )
+      .subscribe();
   }
 }

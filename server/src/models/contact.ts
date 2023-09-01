@@ -14,16 +14,13 @@ const contactSchema: Schema<IContact> = new Schema<IContact>(
       require: true,
     },
     email: {
-      type: String,
-      require: true,
+      type: String
     },
     telephoneNumber: {
-      type: Number,
-      require: true,
+      type: Number
     },
     favoriteFlag: {
-      type: String,
-      require: true,
+      type: String
     },
   },
   { timestamps: true }

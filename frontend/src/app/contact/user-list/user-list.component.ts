@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { User } from '../models/user.model';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -9,5 +10,5 @@ import { User } from '../models/user.model';
 })
 export class UserListComponent {
   @Input()
-  users: User[] = []
+  users: User[];
 }

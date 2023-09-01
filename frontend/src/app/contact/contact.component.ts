@@ -10,13 +10,18 @@ import { User } from './models/user.model';
   styleUrls: ['./contact.component.css'],
 })
 export class ContactComponent implements OnInit {
+  contacts: User[];
 
-  contact: User[] = [];
-
-  constructor(private modalService: NgbModal, private contactService: ContactService) {}
+  constructor(
+    private modalService: NgbModal,
+    private contactService: ContactService
+  ) {}
 
   ngOnInit(): void {
-    this.contactService.contacts$.subscribe(response => this.contact = response);
+    this.contactService.contacts$.subscribe((data) => {
+      this.contacts = data;
+    });
+    this.contactService.fetchContacts();
   }
 
   showModal(event: any) {

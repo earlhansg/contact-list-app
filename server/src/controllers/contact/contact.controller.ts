@@ -11,10 +11,12 @@ export async function getContacts(
 
 
 export async function createContact(req: Request, res: Response): Promise<Response> {
+  console.log("enter");
   const contact = new Contact(req.body);
   await contact.save();
 
   return res.json({
-      message: "Contact successfuly saved"  
+      message: "Contact successfuly saved",
+      contact
   })
 };

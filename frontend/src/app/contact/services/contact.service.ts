@@ -1,38 +1,36 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
-import { firstValueFrom } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { AddContactResponse, User, UserForm } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ContactService {
   private baseUrl = 'http://localhost:3000';
-  private contactSubject = new Subject<any>();
+  private contactSubject = new BehaviorSubject<User[]>([]);
   contacts$ = this.contactSubject.asObservable();
 
-  constructor(private http: HttpClient) {
-    http.get(`${this.baseUrl}/api/contact`).subscribe(res => this.contactSubject.next(res))
+  constructor(private http: HttpClient) {}
+
+  fetchContacts() {
+    this.http.get<User[]>(`${this.baseUrl}/api/contact`).subscribe((data) => {
+      this.contactSubject.next(data);
+    });
   }
 
-  // Example: Fetch contact from the backend API
-  // fetchData() {
-  //   return this.http.get(`${this.baseUrl}/api/contacts`);
-  // }
+  getContacts(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.baseUrl}/api/contact`);
+  }
 
-  // Example: Send contact to the backend API
-  // sendData(data: any) {
-  //   return this.http.post(`${this.baseUrl}/api/data`, data);
-  // }
-  async addContact(newData: any) {
-    try {
-      const response = await firstValueFrom(
-        this.http.post(`${this.baseUrl}/api/contact`, newData)
-      );
-      this.contactSubject.next(newData);
-    } catch (error) {
-      console.error(error);
-    }
+  addContact(newContact: UserForm): Observable<AddContactResponse> {
+    return this.http.post<AddContactResponse>(
+      `${this.baseUrl}/api/contact`,
+      newContact
+    );
+  }
+
+  updatedContacts(contacts: User[]) {
+    this.contactSubject.next(contacts);
   }
 }
