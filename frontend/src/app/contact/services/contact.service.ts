@@ -14,13 +14,13 @@ export class ContactService {
   constructor(private http: HttpClient) {}
 
   fetchContacts() {
-    this.http.get<User[]>(`${this.baseUrl}/api/contact`).subscribe((data) => {
+    this.http.get<User[]>(`${this.baseUrl}/api/contacts`).subscribe((data) => {
       this.contactSubject.next(data);
     });
   }
 
   getContacts(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.baseUrl}/api/contact`);
+    return this.http.get<User[]>(`${this.baseUrl}/api/contacts`);
   }
 
   addContact(newContact: UserForm): Observable<AddContactResponse> {

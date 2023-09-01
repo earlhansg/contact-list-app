@@ -20,3 +20,27 @@ export async function createContact(req: Request, res: Response): Promise<Respon
       contact
   })
 };
+
+
+export async function updateContact(req: Request, res: Response): Promise<Response> {
+  try {
+    const contactId = req.params.id;
+    const { ...updatedValues } = req.body;
+
+    const updatedContact = await Contact.findOneAndUpdate(
+      { _id: contactId },
+      { $set: updatedValues },
+      { new: true }
+    );
+
+    if (!updatedContact) {
+      return res.status(404).send("Contact not found");
+    }
+
+    return res.status(200).send(updatedContact);
+  } catch (error) {
+    console.error('Error updating contact:', error);
+    return res.status(500).send('Internal Server Error');
+  }
+}
+
