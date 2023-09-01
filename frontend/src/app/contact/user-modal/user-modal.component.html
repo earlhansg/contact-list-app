@@ -1,5 +1,10 @@
 <div class="header d-flex p-3">
-  <h5 class="" id="modal-basic-title">Add Contact</h5>
+  <ng-container *ngIf="!currentUser; else edit">
+    <h5 class="" id="modal-basic-title">Add Contact</h5>
+  </ng-container>
+  <ng-template #edit>
+    <h5 class="" id="modal-basic-title">Update Contact</h5>
+  </ng-template>
   <button type="button" class="btn" aria-label="Close" (click)="closeModal()">
     <span aria-hidden="true">×</span>
   </button>

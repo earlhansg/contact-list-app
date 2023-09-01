@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { User } from '../models/user.model';
 import { Observable } from 'rxjs';
 
@@ -11,4 +11,12 @@ import { Observable } from 'rxjs';
 export class UserListComponent {
   @Input()
   users: User[];
+
+  @Output()
+  editUser: EventEmitter<User> = new EventEmitter<User>()
+
+  selectedUser(user: User) {
+    this.editUser.emit(user);
+  }
+
 }

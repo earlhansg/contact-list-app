@@ -21,7 +21,7 @@
           <td>{{user.telephoneNumber}}</td>
           <td>{{user.favoriteFlag}}</td>
           <td>
-            <button type="submit" class="btn btn-primary">
+            <button class="btn btn-primary" (click)="selectedUser(user)">
               <span class="bi-pencil"></span>
             </button>
             <button type="submit" class="btn btn-danger">

@@ -17,11 +17,12 @@ import { of, switchMap } from 'rxjs';
   styleUrls: ['./user-modal.component.css'],
 })
 export class UserModalComponent implements OnInit {
-  closeResult: string = '';
 
   contactForm: FormGroup;
 
   contacts: User[];
+
+  currentUser: User;
 
   flags = [
     { id: 1, name: 'USA' },
@@ -34,27 +35,29 @@ export class UserModalComponent implements OnInit {
     private modalService: NgbModal,
     private fb: FormBuilder,
     private contactService: ContactService
-  ) {
-    this.contactForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.email]],
-      telephoneNumber: [
-        '',
-        [Validators.minLength(6), this.telephoneNumberValidator],
-      ],
-      favoriteFlag: '',
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
-    console.log('changes', this.closeResult);
     this.contactService.contacts$.subscribe((data) => {
       this.contacts = data;
     });
+    this.initializeContactForm();
   }
 
   closeModal() {
     this.modalService.dismissAll();
+  }
+
+  initializeContactForm() {
+    this.contactForm = this.fb.group({
+      name: [this.currentUser?.name || '', [Validators.required, Validators.minLength(3)]],
+      email: [this.currentUser?.email || '', [Validators.email]],
+      telephoneNumber: [
+        this.currentUser?.telephoneNumber || '',
+        [Validators.minLength(6), this.telephoneNumberValidator],
+      ],
+      favoriteFlag: this.currentUser?.favoriteFlag || '',
+    });
   }
 
   get nameControl() {

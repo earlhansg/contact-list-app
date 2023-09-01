@@ -24,7 +24,14 @@ export class ContactComponent implements OnInit {
     this.contactService.fetchContacts();
   }
 
-  showModal(event: any) {
+  showModal(user?: User) {
     const modalRef = this.modalService.open(UserModalComponent);
+    if(user) {
+      modalRef.componentInstance.currentUser = user;
+    }
+  }
+
+  onSelectedUser(user: User) {
+    this.showModal(user);
   }
 }

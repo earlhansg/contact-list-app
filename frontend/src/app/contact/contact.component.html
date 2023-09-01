@@ -1,5 +1,5 @@
 <div class="contact container">
-  <header (addContact)="showModal($event)"></header>
+  <header (addContact)="showModal()"></header>
   <filter></filter>
-  <user-list [users]="contacts"></user-list>
+  <user-list [users]="contacts" (editUser)="onSelectedUser($event)"></user-list>
 </div>
