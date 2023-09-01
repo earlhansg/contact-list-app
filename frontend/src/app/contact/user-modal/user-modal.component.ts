@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ContactService } from '../services/contact.service';
-import { User, UserForm } from '../models/user.model';
+import { User } from '../models/user.model';
 import { of, switchMap } from 'rxjs';
 
 @Component({
@@ -102,14 +102,12 @@ export class UserModalComponent implements OnInit {
   }
 
   onSubmit() {
-    // Submit the form and handle the response using RxJS operators
     this.contactService
       .addContact(this.contactForm.value)
       .pipe(
-        switchMap((res) => {
-          if (res.contact) {
-            // If the response contains a contact, update the contacts list
-            this.contacts.push(res.contact);
+        switchMap((addedContact) => {
+          if (addedContact) {
+            this.contacts.push(addedContact);
             this.contactService.updatedContacts(this.contacts);
             this.contactForm.reset();
             this.closeModal();
@@ -122,13 +120,11 @@ export class UserModalComponent implements OnInit {
   }
 
   updateContact() {
-    // Submit the form and handle the response using RxJS operators
     this.contactService
       .editContact(this.currentUser._id, this.contactForm.value)
       .pipe(
         switchMap((updatedContact) => {
           if (updatedContact) {
-            // If the response contains a contact, update the contacts list
             this.contacts.map((contact) => {
               if(contact._id === this.currentUser._id) {
                 Object.assign(contact, updatedContact)

@@ -9,20 +9,38 @@ export async function getContacts(
   return res.json(contacts);
 }
 
+// export async function createContact(
+//   req: Request,
+//   res: Response
+// ): Promise<Response> {
+//   console.log("enter");
+//   const contact = new Contact(req.body);
+//   await contact.save();
 
-export async function createContact(req: Request, res: Response): Promise<Response> {
-  console.log("enter");
-  const contact = new Contact(req.body);
-  await contact.save();
+//   return res.json({
+//     message: "Contact successfuly saved",
+//     contact,
+//   });
+// }
 
-  return res.json({
-      message: "Contact successfuly saved",
-      contact
-  })
-};
+export async function createContact(
+  req: Request,
+  res: Response
+): Promise<Response> {
+  try {
+    const contact = new Contact(req.body);
+    await contact.save();
+    return res.status(200).send(contact);
+  } catch (error) {
+    console.error("Error adding contact:", error);
+    return res.status(500).send("Internal Server Error");
+  }
+}
 
-
-export async function updateContact(req: Request, res: Response): Promise<Response> {
+export async function updateContact(
+  req: Request,
+  res: Response
+): Promise<Response> {
   try {
     const contactId = req.params.id;
     const { ...updatedValues } = req.body;
@@ -39,8 +57,7 @@ export async function updateContact(req: Request, res: Response): Promise<Respon
 
     return res.status(200).send(updatedContact);
   } catch (error) {
-    console.error('Error updating contact:', error);
-    return res.status(500).send('Internal Server Error');
+    console.error("Error updating contact:", error);
+    return res.status(500).send("Internal Server Error");
   }
 }
-

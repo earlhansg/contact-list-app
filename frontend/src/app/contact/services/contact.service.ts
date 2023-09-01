@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { AddContactResponse, User, UserForm } from '../models/user.model';
+import { User, UserForm } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -23,8 +23,8 @@ export class ContactService {
     return this.http.get<User[]>(`${this.baseUrl}/api/contacts`);
   }
 
-  addContact(newContact: UserForm): Observable<AddContactResponse> {
-    return this.http.post<AddContactResponse>(
+  addContact(newContact: UserForm): Observable<User> {
+    return this.http.post<User>(
       `${this.baseUrl}/api/contact`,
       newContact
     );
