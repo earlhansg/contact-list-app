@@ -30,6 +30,13 @@ export class ContactService {
     );
   }
 
+  editContact(id: string, updatedInfo: UserForm): Observable<User> {
+    return this.http.put<User>(
+      `${this.baseUrl}/api/contacts/${id}`,
+      updatedInfo
+    );
+  }
+
   updatedContacts(contacts: User[]) {
     this.contactSubject.next(contacts);
   }

@@ -120,4 +120,29 @@ export class UserModalComponent implements OnInit {
       )
       .subscribe();
   }
+
+  updateContact() {
+    // Submit the form and handle the response using RxJS operators
+    this.contactService
+      .editContact(this.currentUser._id, this.contactForm.value)
+      .pipe(
+        switchMap((updatedContact) => {
+          if (updatedContact) {
+            // If the response contains a contact, update the contacts list
+            this.contacts.map((contact) => {
+              if(contact._id === this.currentUser._id) {
+                Object.assign(contact, updatedContact)
+              }
+            })
+
+            this.contactService.updatedContacts(this.contacts);
+            this.contactForm.reset();
+            this.closeModal();
+          }
+          // Return an empty observable to avoid emitting a value
+          return of(undefined);
+        })
+      )
+      .subscribe();
+  }
 }

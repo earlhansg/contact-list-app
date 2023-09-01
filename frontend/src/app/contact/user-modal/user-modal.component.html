@@ -34,7 +34,9 @@
     <div class="text-end">
       <small
         class="text-danger"
-        *ngIf="telephoneNumberControl?.invalid && telephoneNumberControl?.touched"
+        *ngIf="
+          telephoneNumberControl?.invalid && telephoneNumberControl?.touched
+        "
       >
         Invalid Telephone Number
       </small>
@@ -53,12 +55,24 @@
 </div>
 <div class="footer d-flex">
   <button type="button" class="btn" (click)="closeModal()">Cancel</button>
-  <button
-    type="button"
-    class="btn btn-success footerBtn-success"
-    (click)="onSubmit()"
-    [disabled]="!customValidation()"
-  >
-    Save
-  </button>
+  <ng-container *ngIf="!currentUser; else btnUpdate">
+    <button
+      type="button"
+      class="btn btn-success footerBtn-success"
+      (click)="onSubmit()"
+      [disabled]="!customValidation()"
+    >
+      Save
+    </button>
+  </ng-container>
+  <ng-template #btnUpdate>
+    <button
+      type="button"
+      class="btn btn-success footerBtn-success"
+      (click)="updateContact()"
+      [disabled]="!customValidation()"
+    >
+      Update
+    </button>
+  </ng-template>
 </div>
