@@ -9,20 +9,6 @@ export async function getContacts(
   return res.json(contacts);
 }
 
-// export async function createContact(
-//   req: Request,
-//   res: Response
-// ): Promise<Response> {
-//   console.log("enter");
-//   const contact = new Contact(req.body);
-//   await contact.save();
-
-//   return res.json({
-//     message: "Contact successfuly saved",
-//     contact,
-//   });
-// }
-
 export async function createContact(
   req: Request,
   res: Response
@@ -61,3 +47,23 @@ export async function updateContact(
     return res.status(500).send("Internal Server Error");
   }
 }
+
+export async function deleteContact(
+  req: Request,
+  res: Response
+): Promise<Response> {
+  try {
+    const contactId = req.params.id;
+    const deletedContact = await Contact.findByIdAndDelete(contactId);
+
+    if (!deletedContact) {
+      return res.status(404).send('Contact not found');
+    }
+
+    return res.status(202).send('Contact deleted successfully');
+  } catch (error) {
+    console.error('Error deleting contact:', error);
+    return res.status(500).send('Internal Server Error');
+  }
+}
+
