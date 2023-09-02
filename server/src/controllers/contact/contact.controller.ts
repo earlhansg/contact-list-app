@@ -9,6 +9,27 @@ export async function getContacts(
   return res.json(contacts);
 }
 
+export const getContactByName = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  try {
+    const name = req.params.name;
+
+    // Use Mongoose to find the contact by name
+    const contact = await Contact.findOne({ name });
+
+    if (!contact) {
+      return res.status(404).json({ message: 'Contact not found' });
+    }
+
+    return res.json(contact);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Server Error' });
+  }
+};
+
 export async function createContact(
   req: Request,
   res: Response
