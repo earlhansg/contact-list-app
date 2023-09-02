@@ -13,10 +13,17 @@ export class UserListComponent {
   users: User[];
 
   @Output()
-  editUser: EventEmitter<User> = new EventEmitter<User>()
+  editContact: EventEmitter<User> = new EventEmitter<User>()
+
+  @Output()
+  deleteContact: EventEmitter<string> = new EventEmitter<string>()
 
   selectedUser(user: User) {
-    this.editUser.emit(user);
+    this.editContact.emit(user);
+  }
+
+  removeUser(id: string) {
+    this.deleteContact.emit(id);
   }
 
 }

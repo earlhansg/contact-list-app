@@ -24,7 +24,7 @@
             <button class="btn btn-primary" (click)="selectedUser(user)">
               <span class="bi-pencil"></span>
             </button>
-            <button type="submit" class="btn btn-danger">
+            <button class="btn btn-danger" (click)="removeUser(user._id)">
               <span class="bi-trash"></span>
             </button>
           </td>

@@ -57,13 +57,14 @@ export async function deleteContact(
     const deletedContact = await Contact.findByIdAndDelete(contactId);
 
     if (!deletedContact) {
-      return res.status(404).send('Contact not found');
+      return res.status(404).send("Contact not found");
     }
 
-    return res.status(202).send('Contact deleted successfully');
+    return res
+      .status(202)
+      .json({ message: "Contact deleted successfully", statusCode: 202 }); // Include a response body with a message
   } catch (error) {
-    console.error('Error deleting contact:', error);
-    return res.status(500).send('Internal Server Error');
+    console.error("Error deleting contact:", error);
+    return res.status(500).send("Internal Server Error");
   }
 }
-

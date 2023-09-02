@@ -24,10 +24,7 @@ export class ContactService {
   }
 
   addContact(newContact: UserForm): Observable<User> {
-    return this.http.post<User>(
-      `${this.baseUrl}/api/contact`,
-      newContact
-    );
+    return this.http.post<User>(`${this.baseUrl}/api/contact`, newContact);
   }
 
   editContact(id: string, updatedInfo: UserForm): Observable<User> {
@@ -39,5 +36,9 @@ export class ContactService {
 
   updatedContacts(contacts: User[]) {
     this.contactSubject.next(contacts);
+  }
+
+  deleteContact(id: string) {
+    return this.http.delete(`${this.baseUrl}/api/contacts/${id}`);
   }
 }

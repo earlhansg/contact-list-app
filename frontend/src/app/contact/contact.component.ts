@@ -26,12 +26,26 @@ export class ContactComponent implements OnInit {
 
   showModal(user?: User) {
     const modalRef = this.modalService.open(UserModalComponent);
-    if(user) {
+    if (user) {
       modalRef.componentInstance.currentUser = user;
     }
   }
 
-  onSelectedUser(user: User) {
+  onEditContact(user: User) {
     this.showModal(user);
+  }
+
+  onDeleteContact(id: string) {
+    this.contactService.deleteContact(id).subscribe({
+      next: (res) => {
+        if (res) {
+          this.contacts = this.contacts.filter((contact) => contact._id !== id);
+          this.contactService.updatedContacts(this.contacts);
+        }
+      },
+      error: (error) => {
+        console.error('Error deleting contact:', error); // Handle errors here
+      },
+    });
   }
 }
