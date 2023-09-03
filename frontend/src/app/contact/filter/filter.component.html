@@ -1,4 +1,14 @@
-<div class="filter d-flex justify-content-end p-4">
+<div class="filter d-flex justify-content-start p-4">
+  <div class="filter-input">
+    <input
+      type="name"
+      class="form-control"
+      id="search-input"
+      placeholder="Search name"
+      [(ngModel)]="searchTerm"
+      (input)="search($event)"
+    />
+  </div>
   <div class="filter-one">
     <button
       type="button"

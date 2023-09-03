@@ -10,7 +10,11 @@ import { User } from './models/user.model';
   styleUrls: ['./contact.component.css'],
 })
 export class ContactComponent implements OnInit {
+
   contacts: User[];
+  unfilteredContacts: User[];
+
+  searchTerm: string = 'ss';
 
   constructor(
     private modalService: NgbModal,
@@ -20,6 +24,7 @@ export class ContactComponent implements OnInit {
   ngOnInit(): void {
     this.contactService.contacts$.subscribe((data) => {
       this.contacts = data;
+      this.unfilteredContacts = data;
     });
     this.contactService.fetchContacts();
   }
@@ -41,11 +46,24 @@ export class ContactComponent implements OnInit {
         if (res) {
           this.contacts = this.contacts.filter((contact) => contact._id !== id);
           this.contactService.updatedContacts(this.contacts);
+          this.contactService.fetchContacts();
+          this.searchTerm = '';
         }
       },
       error: (error) => {
         console.error('Error deleting contact:', error); // Handle errors here
       },
     });
+  }
+
+  onFilterByName(name: any | string) {
+    if (name === '') {
+      this.contacts = this.unfilteredContacts;
+    } else {
+      const filteredContacts = this.unfilteredContacts.filter(
+        (contact) => contact.name === name
+      );
+      this.contacts = filteredContacts.length ? filteredContacts : [];
+    }
   }
 }
