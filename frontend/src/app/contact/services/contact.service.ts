@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, delay, map, of } from 'rxjs';
 import { User, UserForm } from '../models/user.model';
 
 @Injectable({
@@ -21,6 +21,12 @@ export class ContactService {
 
   getContacts(): Observable<User[]> {
     return this.http.get<User[]>(`${this.baseUrl}/api/contacts`);
+  }
+
+  getContactByName(name: string): Observable<User> {
+    return this.http
+      .get<User>(`${this.baseUrl}/api/contacts/${name}`)
+      .pipe(delay(1000));
   }
 
   addContact(newContact: UserForm): Observable<User> {

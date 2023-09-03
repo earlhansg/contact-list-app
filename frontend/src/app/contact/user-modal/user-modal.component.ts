@@ -1,15 +1,11 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ContactService } from '../services/contact.service';
 import { User } from '../models/user.model';
 import { of, switchMap } from 'rxjs';
+import { FormValidator } from '../utility/validators/form.validator';
 
 @Component({
   selector: 'user-modal',
@@ -17,12 +13,13 @@ import { of, switchMap } from 'rxjs';
   styleUrls: ['./user-modal.component.css'],
 })
 export class UserModalComponent implements OnInit {
-
   contactForm: FormGroup;
 
   contacts: User[];
 
   currentUser: User;
+
+  formValidator: FormValidator;
 
   flags = [
     { id: 1, name: 'USA' },
@@ -50,55 +47,20 @@ export class UserModalComponent implements OnInit {
 
   initializeContactForm() {
     this.contactForm = this.fb.group({
-      name: [this.currentUser?.name || '', [Validators.required, Validators.minLength(3)]],
+      name: [
+        this.currentUser?.name || '',
+        [Validators.required, Validators.minLength(3)],
+        [FormValidator.nameAsyncValidator(this.contactService)],
+      ],
       email: [this.currentUser?.email || '', [Validators.email]],
       telephoneNumber: [
         this.currentUser?.telephoneNumber || '',
-        [Validators.minLength(6), this.telephoneNumberValidator],
+        [Validators.minLength(6), FormValidator.telephoneNumberValidator],
       ],
       favoriteFlag: this.currentUser?.favoriteFlag || '',
     });
-  }
 
-  get nameControl() {
-    return this.contactForm.get('name');
-  }
-
-  get emailControl() {
-    return this.contactForm.get('email');
-  }
-
-  get telephoneNumberControl() {
-    return this.contactForm.get('telephoneNumber');
-  }
-
-  telephoneNumberValidator(control: AbstractControl) {
-    const regexPattern = /^[0-9+]+$/;
-    if (regexPattern.test(control.value)) {
-      console.log('Valid input: ' + control.value);
-      return null;
-    } else {
-      console.log('Invalid input: ' + control.value);
-      return {
-        invalidFormat: true,
-      };
-    }
-  }
-
-  error: string = '';
-
-  customValidation() {
-    if (!this.emailControl && !this.telephoneNumberControl) {
-      return false;
-    }
-    if (
-      this.nameControl?.valid &&
-      ((this.emailControl?.value !== '' && this.emailControl?.valid) ||
-        this.telephoneNumberControl?.valid)
-    ) {
-      return true;
-    }
-    return false;
+    this.formValidator = new FormValidator(this.contactForm);
   }
 
   onSubmit() {
@@ -126,10 +88,10 @@ export class UserModalComponent implements OnInit {
         switchMap((updatedContact) => {
           if (updatedContact) {
             this.contacts.map((contact) => {
-              if(contact._id === this.currentUser._id) {
-                Object.assign(contact, updatedContact)
+              if (contact._id === this.currentUser._id) {
+                Object.assign(contact, updatedContact);
               }
-            })
+            });
 
             this.contactService.updatedContacts(this.contacts);
             this.contactForm.reset();

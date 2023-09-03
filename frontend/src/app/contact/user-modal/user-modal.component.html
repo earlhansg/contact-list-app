@@ -15,6 +15,16 @@
       <label for="exampleInputPassword1">Name</label>
       <input class="form-control" formControlName="name" />
     </div>
+    <div class="text-end">
+      <small
+        class="text-danger"
+        *ngIf="
+        formValidator.nameControl?.hasError('nameAlreadyExists')
+        "
+      >
+        Name already exist
+      </small>
+    </div>
     <div class="form-group d-flex content-form">
       <label for="exampleInputPassword1">Email</label>
       <input class="form-control" formControlName="email" />
@@ -22,7 +32,7 @@
     <div class="text-end">
       <small
         class="text-danger"
-        *ngIf="emailControl?.invalid && emailControl?.touched"
+        *ngIf="formValidator.emailControl?.invalid && formValidator.emailControl?.touched"
       >
         Invalid Email
       </small>
@@ -35,7 +45,7 @@
       <small
         class="text-danger"
         *ngIf="
-          telephoneNumberControl?.invalid && telephoneNumberControl?.touched
+        formValidator.telephoneNumberControl?.invalid && formValidator.telephoneNumberControl?.touched
         "
       >
         Invalid Telephone Number
@@ -60,7 +70,7 @@
       type="button"
       class="btn btn-success footerBtn-success"
       (click)="onSubmit()"
-      [disabled]="!customValidation()"
+      [disabled]="!formValidator.customValidation()"
     >
       Save
     </button>
@@ -70,7 +80,7 @@
       type="button"
       class="btn btn-success footerBtn-success"
       (click)="updateContact()"
-      [disabled]="!customValidation()"
+      [disabled]="!formValidator.customValidation()"
     >
       Update
     </button>
