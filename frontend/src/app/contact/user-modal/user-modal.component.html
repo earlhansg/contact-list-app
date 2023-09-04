@@ -18,9 +18,7 @@
     <div class="text-end">
       <small
         class="text-danger"
-        *ngIf="
-        formValidator.nameControl?.hasError('nameAlreadyExists')
-        "
+        *ngIf="formValidator.nameControl?.hasError('nameAlreadyExists')"
       >
         Name already exist
       </small>
@@ -32,7 +30,10 @@
     <div class="text-end">
       <small
         class="text-danger"
-        *ngIf="formValidator.emailControl?.invalid && formValidator.emailControl?.touched"
+        *ngIf="
+          formValidator.emailControl?.invalid &&
+          formValidator.emailControl?.touched
+        "
       >
         Invalid Email
       </small>
@@ -45,7 +46,8 @@
       <small
         class="text-danger"
         *ngIf="
-        formValidator.telephoneNumberControl?.invalid && formValidator.telephoneNumberControl?.touched
+          formValidator.telephoneNumberControl?.invalid &&
+          formValidator.telephoneNumberControl?.touched
         "
       >
         Invalid Telephone Number
@@ -56,7 +58,7 @@
       <ng-select
         [items]="flags"
         bindLabel="name"
-        bindValue="id"
+        bindValue="name"
         formControlName="favoriteFlag"
       >
       </ng-select>

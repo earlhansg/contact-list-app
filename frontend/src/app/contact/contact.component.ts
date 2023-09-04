@@ -14,7 +14,7 @@ export class ContactComponent implements OnInit {
   contacts: User[];
   unfilteredContacts: User[];
 
-  searchTerm: string = 'ss';
+  searchTerm: string = '';
 
   constructor(
     private modalService: NgbModal,
@@ -57,6 +57,7 @@ export class ContactComponent implements OnInit {
   }
 
   onFilterByName(name: any | string) {
+    this.searchTerm = name;
     if (name === '') {
       this.contacts = this.unfilteredContacts;
     } else {

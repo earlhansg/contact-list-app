@@ -50,7 +50,7 @@ export class UserModalComponent implements OnInit {
       name: [
         this.currentUser?.name || '',
         [Validators.required, Validators.minLength(3)],
-        [FormValidator.nameAsyncValidator(this.contactService)],
+        [FormValidator.nameAsyncValidator(this.contactService, !!this.currentUser)],
       ],
       email: [this.currentUser?.email || '', [Validators.email]],
       telephoneNumber: [

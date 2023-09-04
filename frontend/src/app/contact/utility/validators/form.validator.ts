@@ -24,16 +24,20 @@ export class FormValidator {
     return this.contactForm.get('telephoneNumber');
   }
 
-  static nameAsyncValidator(contactService: ContactService): AsyncValidatorFn {
+  static nameAsyncValidator(contactService: ContactService, isNoValue: true): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       const name = control.value;
-
-      return contactService.getContactByName(name).pipe(
-        map((isTaken) => (isTaken ? { nameAlreadyExists: true } : null)),
-        catchError(() => of(null))
-      );
+      if (!isNoValue) {
+        return contactService.getContactByName(name).pipe(
+          map((isTaken) => (isTaken ? { nameAlreadyExists: true } : null)),
+          catchError(() => of(null))
+        );
+      } else {
+        return of(null);
+      }
     };
   }
+  
 
   static telephoneNumberValidator(control: AbstractControl) {
     const regexPattern = /^[0-9+]+$/;
