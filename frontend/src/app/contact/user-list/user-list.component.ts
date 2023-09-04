@@ -12,6 +12,12 @@ export class UserListComponent {
   @Input()
   users: User[];
 
+  @Input()
+  itemsPerPage: number;
+
+  currentPage: number;
+
+
   @Output()
   editContact: EventEmitter<User> = new EventEmitter<User>()
 

@@ -8,10 +8,12 @@ import { ContactComponent } from './contact/contact.component';
 import { HeaderComponent } from './contact/header/header.component';
 import { FilterComponent } from './contact/filter/filter.component';
 import { UserListComponent } from './contact/user-list/user-list.component';
+import { UserModalComponent } from './contact/user-modal/user-modal.component';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { UserModalComponent } from './contact/user-modal/user-modal.component';
+
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 @NgModule({
@@ -29,7 +31,8 @@ import { UserModalComponent } from './contact/user-modal/user-modal.component';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    NgSelectModule
+    NgSelectModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

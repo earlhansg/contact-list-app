@@ -14,6 +14,8 @@ export class ContactComponent implements OnInit {
   contacts: User[];
   unfilteredContacts: User[];
 
+  perPage = 5;
+
   searchTerm: string = '';
 
   constructor(
@@ -67,4 +69,10 @@ export class ContactComponent implements OnInit {
       this.contacts = filteredContacts.length ? filteredContacts : [];
     }
   }
+
+  onShowPage(value: number) {
+    this.perPage = value;
+  }
+
+
 }

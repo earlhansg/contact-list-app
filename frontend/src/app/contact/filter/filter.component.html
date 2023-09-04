@@ -36,11 +36,21 @@
       aria-expanded="false"
       data-bs-toggle="dropdown"
     >
-      10
+      {{ !selectedValue ? 1 : selectedValue }}
     </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" href="#">10</a>
-      <a class="dropdown-item" href="#">20</a>
+    <div
+      class="dropdown-menu"
+      aria-labelledby="dropdownMenuButton"
+      *ngIf="numberOfContacts !== 1"
+    >
+      <a
+        class="dropdown-item"
+        href="#"
+        *ngFor="let pageNumber of listPage"
+        (click)="selectValue(pageNumber)"
+      >
+        {{ pageNumber }}
+      </a>
     </div>
   </div>
 </div>

@@ -1,11 +1,14 @@
 <div class="contact container">
   <header (addContact)="showModal()"></header>
   <filter
-    (filterByName)="onFilterByName($event)"
     [searchTerm]="searchTerm"
+    [numberOfContacts]="contacts.length"
+    (filterByName)="onFilterByName($event)"
+    (showPage)="onShowPage($event)"
   ></filter>
   <user-list
     [users]="contacts"
+    [itemsPerPage]="perPage"
     (editContact)="onEditContact($event)"
     (deleteContact)="onDeleteContact($event)"
   ></user-list>
