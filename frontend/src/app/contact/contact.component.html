@@ -5,6 +5,7 @@
     [numberOfContacts]="contacts.length"
     (filterByName)="onFilterByName($event)"
     (showPage)="onShowPage($event)"
+    (filterByFavorite)="onFilterByFavorite($event)"
   ></filter>
   <user-list
     [users]="contacts"

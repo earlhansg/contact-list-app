@@ -20,6 +20,9 @@ export class ContactComponent implements OnInit {
 
   perPage = 5;
 
+  isFilteredByFavorite = false;
+  filteredContactsByFavorite: User[];
+
   searchTerm: string = '';
 
   constructor(
@@ -68,15 +71,16 @@ export class ContactComponent implements OnInit {
     });
   }
 
+
   onFilterByName(name: any | string) {
     this.searchTerm = name;
+  
     if (name === '') {
-      this.contacts = this.unfilteredContacts;
+      this.contacts = this.isFilteredByFavorite ? this.filteredContactsByFavorite : this.unfilteredContacts;
     } else {
-      const filteredContacts = this.unfilteredContacts.filter(
-        (contact) => contact.name === name
-      );
-      this.contacts = filteredContacts.length ? filteredContacts : [];
+      this.contacts = this.isFilteredByFavorite
+        ? this.filteredContactsByFavorite.filter(contact => contact.name === name)
+        : this.unfilteredContacts.filter(contact => contact.name === name);
     }
   }
 
@@ -84,5 +88,15 @@ export class ContactComponent implements OnInit {
     this.perPage = value;
   }
 
+  onFilterByFavorite(value: boolean) {
+    this.isFilteredByFavorite = value;
+    if(value) {
+      this.contacts = this.unfilteredContacts.filter(({ _id }) =>
+      this.owner.favorites.includes(_id)
+    );
+    this.filteredContactsByFavorite = this.contacts;
+    }
+    else this.contacts = this.unfilteredContacts;
+  }
 
 }

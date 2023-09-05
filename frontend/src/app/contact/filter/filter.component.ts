@@ -26,10 +26,15 @@ export class FilterComponent implements OnInit, OnChanges {
   filterByName: EventEmitter<String> = new EventEmitter<String>();
 
   @Output()
+  filterByFavorite: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  @Output()
   showPage: EventEmitter<number> = new EventEmitter<number>();
+  
 
   listPage: number[] = [];
   selectedValue: number;
+  selectedByFavorite: boolean;
 
   ngOnInit(): void {
     this.searchNameKey
@@ -49,7 +54,7 @@ export class FilterComponent implements OnInit, OnChanges {
     if (changes['numberOfContacts']) {
       this.numberOfContacts = changes['numberOfContacts'].currentValue;
       this.createListofPage();
-      this.selectedValue = this.listPage[0];
+      this.selectedValue = this.listPage[0] ? this.listPage[0]: 1;
     }
   }
 
@@ -68,5 +73,10 @@ export class FilterComponent implements OnInit, OnChanges {
     console.log(value);
     this.selectedValue = value;
     this.showPage.emit(value);
+  }
+
+  selectByFavorites(toggle: boolean) {
+    this.selectedByFavorite = toggle;
+    this.filterByFavorite.emit(toggle)
   }
 }
