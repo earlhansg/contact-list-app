@@ -1,13 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { User } from '../models/user.model';
-import { Observable } from 'rxjs';
-import { Owner } from '../models/owner.model';
-
 
 @Component({
   selector: 'user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css']
+  styleUrls: ['./user-list.component.css'],
 })
 export class UserListComponent {
   @Input()
@@ -21,12 +18,14 @@ export class UserListComponent {
 
   currentPage: number;
 
+  @Output()
+  editContact: EventEmitter<User> = new EventEmitter<User>();
 
   @Output()
-  editContact: EventEmitter<User> = new EventEmitter<User>()
+  deleteContact: EventEmitter<string> = new EventEmitter<string>();
 
   @Output()
-  deleteContact: EventEmitter<string> = new EventEmitter<string>()
+  updateFavorites: EventEmitter<string> = new EventEmitter<string>();
 
   selectedUser(user: User) {
     this.editContact.emit(user);
@@ -37,7 +36,10 @@ export class UserListComponent {
   }
 
   isFavorite(userId: string): boolean {
-    return !!this.favorites.find(favoriteId => userId === favoriteId);
+    return !!this.favorites.find((favoriteId) => userId === favoriteId);
   }
 
+  addFavorite(id: string, status: boolean) {
+    this.updateFavorites.emit(id);
+  }
 }

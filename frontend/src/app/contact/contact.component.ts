@@ -12,7 +12,6 @@ import { Owner } from './models/owner.model';
   styleUrls: ['./contact.component.css'],
 })
 export class ContactComponent implements OnInit {
-
   contacts: User[];
   unfilteredContacts: User[];
 
@@ -37,9 +36,8 @@ export class ContactComponent implements OnInit {
       this.unfilteredContacts = data;
     });
     this.ownerService.owner$.subscribe((data) => {
-      console.log('ownerService', data);
       this.owner = data;
-    })
+    });
     this.contactService.fetchContacts();
     this.ownerService.fetchOwner();
   }
@@ -71,16 +69,19 @@ export class ContactComponent implements OnInit {
     });
   }
 
-
   onFilterByName(name: any | string) {
     this.searchTerm = name;
-  
+
     if (name === '') {
-      this.contacts = this.isFilteredByFavorite ? this.filteredContactsByFavorite : this.unfilteredContacts;
+      this.contacts = this.isFilteredByFavorite
+        ? this.filteredContactsByFavorite
+        : this.unfilteredContacts;
     } else {
       this.contacts = this.isFilteredByFavorite
-        ? this.filteredContactsByFavorite.filter(contact => contact.name === name)
-        : this.unfilteredContacts.filter(contact => contact.name === name);
+        ? this.filteredContactsByFavorite.filter(
+            (contact) => contact.name === name
+          )
+        : this.unfilteredContacts.filter((contact) => contact.name === name);
     }
   }
 
@@ -90,13 +91,18 @@ export class ContactComponent implements OnInit {
 
   onFilterByFavorite(value: boolean) {
     this.isFilteredByFavorite = value;
-    if(value) {
+    if (value) {
       this.contacts = this.unfilteredContacts.filter(({ _id }) =>
-      this.owner.favorites.includes(_id)
-    );
-    this.filteredContactsByFavorite = this.contacts;
-    }
-    else this.contacts = this.unfilteredContacts;
+        this.owner.favorites.includes(_id)
+      );
+      this.filteredContactsByFavorite = this.contacts;
+    } else this.contacts = this.unfilteredContacts;
   }
 
+  onUpdateFavorites(favorite: string) {
+    console.log('onUpdateFavorites', favorite);
+    this.ownerService
+      .updateFavorites(favorite)
+      .subscribe((data) => this.ownerService.updatedOwner(data));
+  }
 }

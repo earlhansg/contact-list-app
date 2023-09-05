@@ -42,12 +42,9 @@ export class FilterComponent implements OnInit, OnChanges {
       .subscribe((term) => {
         this.filterByName.emit(term);
       });
-
-    console.log('listPage', this.listPage);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('changes', changes);
     if (changes['searchTerm']) {
       this.searchTerm = changes['searchTerm'].currentValue;
     }

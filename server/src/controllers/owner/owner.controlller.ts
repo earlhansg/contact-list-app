@@ -41,26 +41,31 @@ export async function updateOwnerFavorites(
 ): Promise<Response> {
   try {
     const ownerId = req.params.id;
-
+    
     // Find the owner and get the old favorites
     const owner = await Owner.findById(ownerId);
     if (!owner) {
       return res.status(404).send("Owner not found");
     }
-
-    const oldFavorites = owner.favorites;
-
-    // Update the owner's favorites with the new values
-    const { favorites } = req.body;
-    console.log("updatedValues", favorites);
-    owner.favorites = oldFavorites?.concat(favorites);
-
+    
+    const { favorite } = req.body;
+    console.log("updatedValues", favorite);
+    
+    const isExist = owner.favorites?.includes(favorite);
+    
+    if (isExist) {
+      owner.favorites = owner.favorites?.filter(list => list !== favorite);
+    } else {
+      owner.favorites?.push(favorite);
+    }
+    
     // Save the updated owner
     const updatedOwner = await owner.save();
-
+    
     return res.status(200).send(updatedOwner);
   } catch (error) {
     console.error("Error updating owner:", error);
     return res.status(500).send("Internal Server Error");
   }
 }
+

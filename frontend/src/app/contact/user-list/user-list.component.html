@@ -1,39 +1,3 @@
-<!-- <ng-container *ngIf="users">
-  <div class="p-4">
-    <table class="table">
-      <thead>
-        <tr>
-          <th class="th-favorites"></th>
-          <th scope="col">Name</th>
-          <th scope="col">Email</th>
-          <th scope="col">Telephone No.</th>
-          <th scope="col">Favorite Flag</th>
-          <th class="th-actions"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of users">
-          <td>
-            <i class="bi bi-star-fill favorite-icon"></i>
-          </td>
-          <td>{{user.name}}</td>
-          <td>{{user.email}}</td>
-          <td>{{user.telephoneNumber}}</td>
-          <td>{{user.favoriteFlag}}</td>
-          <td>
-            <button class="btn btn-primary" (click)="selectedUser(user)">
-              <span class="bi-pencil"></span>
-            </button>
-            <button class="btn btn-danger" (click)="removeUser(user._id)">
-              <span class="bi-trash"></span>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</ng-container> -->
-
 <ng-container *ngIf="users">
   <div class="p-4">
     <table class="table">
@@ -55,7 +19,11 @@
           }"
         >
           <td>
-            <i class="bi bi-star-fill favorite-icon"></i>
+            <i
+              class="bi bi-star-fill"
+              (click)="addFavorite(user._id, isFavorite(user._id))"
+              [ngClass]="{ 'favorite-icon': isFavorite(user._id) }"
+            ></i>
           </td>
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
