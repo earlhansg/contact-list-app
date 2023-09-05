@@ -26,6 +26,7 @@ export class UserModalComponent implements OnInit {
     { id: 2, name: 'PH' },
     { id: 3, name: 'CHINA' },
     { id: 4, name: 'JAPAN' },
+    { id: 4, name: 'CAMBODIA' },
   ];
 
   constructor(
@@ -50,7 +51,12 @@ export class UserModalComponent implements OnInit {
       name: [
         this.currentUser?.name || '',
         [Validators.required, Validators.minLength(3)],
-        [FormValidator.nameAsyncValidator(this.contactService, !!this.currentUser)],
+        [
+          FormValidator.nameAsyncValidator(
+            this.contactService,
+            !!this.currentUser
+          ),
+        ],
       ],
       email: [this.currentUser?.email || '', [Validators.email]],
       telephoneNumber: [
