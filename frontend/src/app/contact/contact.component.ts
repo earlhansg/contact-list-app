@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserModalComponent } from './user-modal/user-modal.component';
 import { ContactService } from './services/contact.service';
+import { OwnerService } from './services/owner.service';
 import { User } from './models/user.model';
+import { Owner } from './models/owner.model';
 
 @Component({
   selector: 'contact',
@@ -14,13 +16,16 @@ export class ContactComponent implements OnInit {
   contacts: User[];
   unfilteredContacts: User[];
 
+  owner: Owner;
+
   perPage = 5;
 
   searchTerm: string = '';
 
   constructor(
     private modalService: NgbModal,
-    private contactService: ContactService
+    private contactService: ContactService,
+    private ownerService: OwnerService
   ) {}
 
   ngOnInit(): void {
@@ -28,7 +33,12 @@ export class ContactComponent implements OnInit {
       this.contacts = data;
       this.unfilteredContacts = data;
     });
+    this.ownerService.owner$.subscribe((data) => {
+      console.log('ownerService', data);
+      this.owner = data;
+    })
     this.contactService.fetchContacts();
+    this.ownerService.fetchOwner();
   }
 
   showModal(user?: User) {

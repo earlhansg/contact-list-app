@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { User } from '../models/user.model';
 import { Observable } from 'rxjs';
+import { Owner } from '../models/owner.model';
 
 
 @Component({
@@ -14,6 +15,9 @@ export class UserListComponent {
 
   @Input()
   itemsPerPage: number;
+
+  @Input()
+  favorites: string[];
 
   currentPage: number;
 

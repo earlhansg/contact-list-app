@@ -9,6 +9,7 @@
   <user-list
     [users]="contacts"
     [itemsPerPage]="perPage"
+    [favorites]="owner.favorites"
     (editContact)="onEditContact($event)"
     (deleteContact)="onDeleteContact($event)"
   ></user-list>
