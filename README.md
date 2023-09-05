@@ -17,13 +17,13 @@ Navigate to the project directory in your terminal.
 Open two separate terminal windows for managing the backend and frontend of the application.
 
 For the first terminal:
-Navigate to the server directory within your project.
-Run the command: "npm start"
+- Navigate to the server directory within your project.
+- Run the command: "npm start"
 
 For the second terminal:
-Navigate to the frontend directory within your project.
-Run the command: "npm start"
-Once both servers are running successfully, open your web browser and go to the following URL: "http://localhost:4200" to access the application.
+- Navigate to the frontend directory within your project.
+- Run the command: "npm start"
+- Once both servers are running successfully, open your web browser and go to the following URL: "http://localhost:4200" to access the application.
 
 
 
