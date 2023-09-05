@@ -34,7 +34,6 @@
   </div>
 </ng-container> -->
 
-
 <ng-container *ngIf="users">
   <div class="p-4">
     <table class="table">
@@ -49,14 +48,19 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of users | paginate: { itemsPerPage, currentPage }">
+        <tr
+          *ngFor="let user of users | paginate : { itemsPerPage, currentPage }"
+          [ngStyle]="{
+            '--bs-table-bg': isFavorite(user._id) ? 'aliceblue' : null
+          }"
+        >
           <td>
             <i class="bi bi-star-fill favorite-icon"></i>
           </td>
-          <td>{{user.name}}</td>
-          <td>{{user.email}}</td>
-          <td>{{user.telephoneNumber}}</td>
-          <td>{{user.favoriteFlag}}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.telephoneNumber }}</td>
+          <td>{{ user.favoriteFlag }}</td>
           <td>
             <button class="btn btn-primary" (click)="selectedUser(user)">
               <span class="bi-pencil"></span>
@@ -70,6 +74,8 @@
     </table>
   </div>
   <div class="p-2">
-    <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+    <pagination-controls
+      (pageChange)="currentPage = $event"
+    ></pagination-controls>
   </div>
 </ng-container>

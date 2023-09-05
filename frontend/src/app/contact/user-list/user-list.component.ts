@@ -36,4 +36,8 @@ export class UserListComponent {
     this.deleteContact.emit(id);
   }
 
+  isFavorite(userId: string): boolean {
+    return !!this.favorites.find(favoriteId => userId === favoriteId);
+  }
+
 }
