@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import { json } from "body-parser";
 import { contactRouter } from "./routes/contact/contact";
+import { ownerRouter } from "./routes/owner/owner";
 import cors from "cors";
 
 const port = 3000;
@@ -12,6 +13,7 @@ app.use(cors());
 
 // Routes
 app.use("/api/", contactRouter);
+app.use("/api/", ownerRouter);
 
 // mongodb connection
 mongoose
